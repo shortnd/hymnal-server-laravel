@@ -20,6 +20,7 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::resource('/players', 'PlayerController');
+Route::resource('/rosters', 'RosterController');
 // Route::get('/players', 'PlayerController@index')->name('players');
 // Route::get('/players/create', 'PlayerController@create')->name('player-create-form');
 // Route::post('/players', 'PlayerController@store')->name('player-create');

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Player;
 use App\Roster;
 use Illuminate\Http\Request;
 
@@ -14,7 +15,7 @@ class RosterController extends Controller
      */
     public function index()
     {
-        //
+        return view('rosters.index')->withRosters(Roster::all());
     }
 
     /**
@@ -24,7 +25,13 @@ class RosterController extends Controller
      */
     public function create()
     {
-        //
+        $players = Player::get([
+            "id",
+            "name",
+            "flag",
+            "image"
+        ]);
+        return view('rosters.create')->withPlayers($players);
     }
 
     /**

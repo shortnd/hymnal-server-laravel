@@ -36,10 +36,21 @@ class PlayerController extends Controller
      */
     public function store(Request $request)
     {
-        if ($request->has('image')) {
-            dd($request->image);
-        }
-        // Player::create()
+        $validResponse = $this->validate($request, [
+            'name' => 'required|min:2|max:100',
+            'flag' => 'sometimes|required',
+            'squadNumber' => 'required|numeric',
+            'team' => 'sometimes|required|alpha|',
+            'bio' => 'required',
+            'thumbnail' => 'sometimes|nullable|file',
+            'image' => 'sometimes|nullable|file',
+            'twitter' => 'sometimes|nullable|url',
+            'instagram' => 'sometimes|nullable'
+        ]);
+
+        Player::create($request->all());
+
+        return redirect()->route('players.index');
     }
 
     /**
@@ -50,7 +61,7 @@ class PlayerController extends Controller
      */
     public function show(Player $player)
     {
-        //
+        return view('players.show')->withPlayer($player);
     }
 
     /**
@@ -61,7 +72,7 @@ class PlayerController extends Controller
      */
     public function edit(Player $player)
     {
-        //
+        return view('players.edit')->withPlayer($player);
     }
 
     /**
@@ -84,6 +95,7 @@ class PlayerController extends Controller
      */
     public function destroy(Player $player)
     {
-        //
+        $player->delete();
+        return redirect()->route('players.index');
     }
 }

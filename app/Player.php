@@ -17,4 +17,9 @@ class Player extends Model
         'twitter',
         'instagram'
     ];
+
+    public function getRouteKeyName()
+    {
+        return 'name';
+    }
 }

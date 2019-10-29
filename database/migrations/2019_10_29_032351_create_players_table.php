@@ -20,10 +20,10 @@ class CreatePlayersTable extends Migration
             $table->string('squadNumber')->nullable();
             $table->string('team');
             $table->longText('bio');
-            $table->string('thumbnail');
-            $table->string('image');
-            $table->string('twitter');
-            $table->string('instagram');
+            $table->string('thumbnail')->nullable();
+            $table->string('image')->nullable();
+            $table->string('twitter')->nullable();
+            $table->string('instagram')->nullable();
             $table->timestamps();
         });
     }

@@ -6,7 +6,7 @@
   <a href="{{ route('players.create') }}">Add Player</a>
   @forelse($players as $player)
   <div>
-    {{ $player->name }}
+    <a href="{{ route('players.show', $player) }}">{{ $player->name }} - {{ $player->flag }}</a>
   </div>
   @empty
   <h3>No Players</h3>
