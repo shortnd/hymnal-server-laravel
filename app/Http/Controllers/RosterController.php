@@ -42,7 +42,13 @@ class RosterController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'rosterTitle' => 'required',
+            'season' => 'required',
+        ]);
+
+        Roster::create($request->only(['rosterTitle', 'season']));
+        return redirect()->route('rosters.index');
     }
 
     /**
@@ -53,7 +59,7 @@ class RosterController extends Controller
      */
     public function show(Roster $roster)
     {
-        //
+        return view('rosters.show')->withRoster($roster);
     }
 
     /**
@@ -64,7 +70,8 @@ class RosterController extends Controller
      */
     public function edit(Roster $roster)
     {
-        //
+        $players = Player::get(["id", "name", "flag", "image"]);
+        return view('rosters.edit', [compact($roster), compact($players)]);
     }
 
     /**

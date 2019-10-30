@@ -22,4 +22,9 @@ class Player extends Model
     {
         return 'name';
     }
+
+    public function Roster()
+    {
+        return $this->belongsToMany(Roster::class);
+    }
 }

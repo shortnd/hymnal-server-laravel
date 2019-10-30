@@ -40,7 +40,7 @@ class PlayerController extends Controller
             'name' => 'required|min:2|max:100',
             'flag' => 'sometimes|required',
             'squadNumber' => 'required|numeric',
-            'team' => 'sometimes|required|alpha|',
+            'team' => 'sometimes|required',
             'bio' => 'required',
             'thumbnail' => 'sometimes|nullable|file',
             'image' => 'sometimes|nullable|file',

@@ -1,7 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
-        <h2>Rosters</h2>
-    </div>
+    <h2>Rosters</h2>
+    @forelse($rosters as $roster)
+        <div>
+            <a href="{{ route('rosters.show', $roster) }}">{{ $roster->rosterTitle }}</a>
+        </div>
+    @empty
+        <h3>No Rosters</h3>
+    @endforelse
 @endsection
