@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Observers\PlayerObserver;
 use App\Observers\RosterObserver;
+use App\Player;
 use App\Roster;
 use Illuminate\Support\ServiceProvider;
 
@@ -26,5 +28,6 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Roster::observe(RosterObserver::class);
+        Player::observe(PlayerObserver::class);
     }
 }

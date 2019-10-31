@@ -42,12 +42,14 @@ class RosterController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
+        $validData = $this->validate($request, [
             'rosterTitle' => 'required',
             'season' => 'required',
         ]);
 
-        Roster::create($request->only(['rosterTitle', 'season']));
+        $roster = Roster::create($validData);
+        $roster->players()->attach($request->players);
+
         return redirect()->route('rosters.index');
     }
 
@@ -70,8 +72,12 @@ class RosterController extends Controller
      */
     public function edit(Roster $roster)
     {
-        $players = Player::get(["id", "name", "flag", "image"]);
-        return view('rosters.edit', [compact($roster), compact($players)]);
+        $players = Player::get();
+        if ($roster->players->count()) {
+            $players = Player::where('id', '!=', $roster->players->pluck('id'))->get();
+        }
+
+        return view('rosters.edit')->withRoster($roster)->withPlayers($players);
     }
 
     /**
@@ -83,7 +89,20 @@ class RosterController extends Controller
      */
     public function update(Request $request, Roster $roster)
     {
-        //
+        $validData = $this->validate($request, [
+            'rosterTitle' => 'required|min:3',
+            'season' => 'required'
+        ]);
+
+        dd($request->add_players);
+
+        $roster->players()->attach($request->add_players);
+
+        $roster->players()->detach($request->current_players);
+        
+        $roster->update($validData);
+
+        return redirect()->route('rosters.show', $roster);
     }
 
     /**
@@ -94,6 +113,7 @@ class RosterController extends Controller
      */
     public function destroy(Roster $roster)
     {
-        //
+        $roster->delete();
+        return redirect()->route('rosters.index');
     }
 }

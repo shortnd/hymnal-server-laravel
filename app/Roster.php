@@ -13,6 +13,10 @@ class Roster extends Model
         'default'
     ];
 
+    protected $guarded = [
+        'id'
+    ];
+
     protected $casts = [
         'active' => 'boolean',
         'default' => 'boolean'
@@ -20,7 +24,7 @@ class Roster extends Model
 
     public function players()
     {
-        return $this->hasMany(Player::class);
+        return $this->belongsToMany(Player::class);
     }
 
     public function getRouteKeyName()

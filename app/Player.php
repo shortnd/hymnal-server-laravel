@@ -18,12 +18,25 @@ class Player extends Model
         'instagram'
     ];
 
+    protected $guarded = [
+        'id',
+        'uuid'
+    ];
+
+    // protected $hidden = [
+    //     'id'
+    // ];
+
+    protected $casts = [
+        'uuid' => 'uuid'
+    ];
+
     public function getRouteKeyName()
     {
-        return 'name';
+        return 'uuid';
     }
 
-    public function Roster()
+    public function rosters()
     {
         return $this->belongsToMany(Roster::class);
     }

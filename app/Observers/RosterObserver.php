@@ -10,7 +10,11 @@ class RosterObserver
     public function saving(Roster $roster)
     {
         $roster->slug = Str::slug($roster->rosterTitle, '-');
-        // $roster->slug = str_slug($roster->rosterTitle);
+    }
+
+    public function creating(Roster $roster)
+    {
+        $roster->uuid = (string) Str::uuid();
     }
 
     /**
@@ -21,7 +25,7 @@ class RosterObserver
      */
     public function created(Roster $roster)
     {
-        // 
+        //
     }
 
     /**
@@ -33,6 +37,17 @@ class RosterObserver
     public function updated(Roster $roster)
     {
         //
+    }
+
+    /**
+     * Hanel the roster "deleting" event.
+     * 
+     * @param \App\Roster $roster
+     * @return void
+     */
+    public function deleting(Roster $roster)
+    {
+        $roster->players()->detach();
     }
 
     /**

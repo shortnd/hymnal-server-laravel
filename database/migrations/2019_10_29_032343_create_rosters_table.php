@@ -15,6 +15,7 @@ class CreateRostersTable extends Migration
     {
         Schema::create('rosters', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->uuid('uuid')->index();
             $table->string('slug')->unique()->index();
             $table->string('rosterTitle');
             $table->string('season');

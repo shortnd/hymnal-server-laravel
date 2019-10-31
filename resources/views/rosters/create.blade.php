@@ -2,28 +2,27 @@
 
 @section('content')
     <div class="container">
-        <form action="{{ route('rosters.store') }}" method="POST">
-            @csrf
+        {!! Form::open(['url' => route('rosters.store')]) !!}
             <div class="form-group">
-                <label for="rosterTitle">Roster Title</label>
-                <input type="text" name="rosterTitle" id="rosterTitle" value="{{ old('rosterTitle') }}" class="form-control @error('rosterTitle') is-invalid @enderror" required />
+                {!! Form::label('rosterTitle', 'Roster Title') !!}
+                {!! Form::text('rosterTitle', null, array_merge(['class' => 'form-control', 'required' => true])) !!}
             </div>
             <div class="form-group">
-                <label for="season">Season</label>
-                <input type="text" name="season" id="season" value="{{ old('season') }}" class="form-control @error('season') is-invalid @enderror" required />
+                {!! Form::label('season', 'Season') !!}
+                {!! Form::text('season', null, array_merge(['class' => 'form-control', 'required' => true])) !!}
             </div>
             <div class="form-group">
-                <multi-select :options="{{ $players }}" v-model="players" :multiple="true" :search="true" track-by="name" label="name" :preselect-first="true">
-                    <template slot="selection" slot-scope="{ players, search, isOpen }"><span class="multiselect__single" v-if="players.length &amp;&amp; !isOpen">@{{ values.length }} options selected</span></template>
-                </multi-select>
-                @error('players')
-                    <small class="text-danger">{{$message}}</small>
-                @enderror
+                {!! Form::label('players', 'Players') !!}
+                 <select name="players[]" id="players[]" multiple>
+                     @foreach($players as $player)
+                        <option value="{{ $player->id }}">{{$player->name}}</option>
+                     @endforeach
+                 </select>
             </div>
             <div class="form-group">
-                <button type="submit" class="btn btn-success">Add Roster</button>
+                {!! Form::submit('Add Roster', array_merge(['class' => 'btn btn-primary'])) !!}
             </div>
-        </form>
+        {!! Form::close() !!}
     </div>
 @endsection
 
