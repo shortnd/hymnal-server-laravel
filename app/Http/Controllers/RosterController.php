@@ -48,7 +48,9 @@ class RosterController extends Controller
         ]);
 
         $roster = Roster::create($validData);
-        $roster->players()->attach($request->players);
+        if (isset($request->players)) {
+            $roster->players()->attach($request->players);
+        }
 
         return redirect()->route('rosters.index');
     }
@@ -72,10 +74,9 @@ class RosterController extends Controller
      */
     public function edit(Roster $roster)
     {
-        $players = Player::get();
-        if ($roster->players->count()) {
-            $players = Player::where('id', '!=', $roster->players->pluck('id'))->get();
-        }
+        $players = Player::whereDoesntHave('rosters', function ($q) use ($roster) {
+            $q->where('roster_id', $roster->id);
+        })->get();
 
         return view('rosters.edit')->withRoster($roster)->withPlayers($players);
     }
@@ -89,18 +90,19 @@ class RosterController extends Controller
      */
     public function update(Request $request, Roster $roster)
     {
+        // dd($request);
         $validData = $this->validate($request, [
             'rosterTitle' => 'required|min:3',
             'season' => 'required'
         ]);
 
-        dd($request->add_players);
+        if ($request->has('players')) {
+            $roster->players()->attach($request->players);
+        }
 
-        $roster->players()->attach($request->add_players);
-
-        $roster->players()->detach($request->current_players);
-        
-        $roster->update($validData);
+        if ($request->has('current_players')) {
+            $roster->players()->detach($request->current_players);
+        }
 
         return redirect()->route('rosters.show', $roster);
     }

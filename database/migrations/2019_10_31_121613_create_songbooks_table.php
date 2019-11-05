@@ -18,8 +18,8 @@ class CreateSongbooksTable extends Migration
             $table->string('songbook_title');
             $table->string('orginization');
             $table->string('description');
-            $table->string('front_cover');
-            $table->string('back_cover');
+            $table->string('front_cover')->nullable();
+            $table->string('back_cover')->nullable();
             $table->string('some_publish_or_expiration_dates')->nullable();
             $table->timestamps();
         });

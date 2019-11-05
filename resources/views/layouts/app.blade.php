@@ -74,8 +74,14 @@
 
         <main class="py-4 container-fluid">
             <div class="row">
-                @include('components.sidebar')
+                @auth
+                    @include('components.sidebar')
+                @endauth
+                @auth
                 <div class="col-md-8">
+                @else
+                <div class="col-md-12">
+                @endauth
                     @yield('content')
                 </div>
             </div>

@@ -17,7 +17,7 @@
         {!! Form::label('current_players[]', 'Current Players') !!}
         <select name="current_players[]" id="current_players[]" class="custom-select" multiple>
           @foreach($roster->players as $player)
-          <option value="{{ $roster->id }}">{{ $player->name }}</option>
+          <option value="{{ $player->id }}">{{ $player->name }}</option>
           @endforeach
         </select>
         <small>
@@ -26,8 +26,8 @@
       </div>
     @endif
     <div class="form-group">
-      {!! Form::label('add_players[]', 'Players') !!}
-      <select name="add_players[]" id="add_players[]" multiple class="custom-select">
+      {!! Form::label('players[]', 'Players') !!}
+      <select name="players[]" id="players[]" multiple class="custom-select">
         @foreach($players as $player)
           <option value="{{ $player->id }}">{{ $player->name }}</option>
         @endforeach

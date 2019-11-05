@@ -2,6 +2,7 @@
 
 @section('content')
   <h2>{{ $roster->rosterTitle }}</h2>
+
   <a href="{{ route('rosters.edit', $roster) }}" class="btn btn-success mb-3">Edit</a>
   {!! Form::open(['url' => route('rosters.destroy', $roster)]) !!}
       @method('DELETE')
